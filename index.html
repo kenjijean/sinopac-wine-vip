@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>永豐銀行尊榮VIP品酒會【SZITY 儷泉精選】西班牙風情名莊佳釀 專屬訂購單</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+    
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #0d0c10;
+      color: #e2e8f0;
+    }
+    
+    .font-serif-tc {
+      font-family: 'Noto Serif TC', serif;
+    }
+    
+    .font-brand {
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Custom subtle glassmorphism */
+    .glass-panel {
+      background: rgba(26, 24, 33, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212, 175, 55, 0.18);
+    }
+
+    .wine-card {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .wine-card:hover {
+      border-color: rgba(212, 175, 55, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.1);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0d0c10;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2d2638;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8b1d2c;
+    }
+  </style>
+</head>
+<body class="min-h-screen relative selection:bg-amber-600 selection:text-white pb-24">
+
+  <!-- 18+ 年齡驗證彈窗 (遵循菸酒管理法規範) -->
+  <div id="ageVerificationModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-opacity duration-300">
+    <div class="glass-panel max-w-md w-full rounded-2xl p-6 sm:p-8 text-center shadow-2xl border border-amber-500/30">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-950/60 border border-red-500/40 flex items-center justify-center text-red-400">
+        <span class="text-2xl font-bold font-brand tracking-widest">18+</span>
+      </div>
+      <h2 class="text-2xl font-bold text-amber-200 font-serif-tc mb-2">法定年齡確認</h2>
+      <p class="text-sm text-slate-300 mb-6 leading-relaxed">
+        依據中華民國《菸酒管理法》規定，酒類商品不得販售予未滿十八歲之青少年。<br>
+        請確認您已符合法定飲酒年齡以進入本預約專區。
+      </p>
+      
+      <div class="space-y-3">
+        <button id="btnAgeConfirm" class="w-full py-3.5 px-4 bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-500 text-amber-50 font-semibold rounded-xl shadow-lg transition transform active:scale-[0.98] border border-amber-400/40">
+          我已年滿 18 歲，同意進入
+        </button>
+        <button id="btnAgeReject" class="w-full py-2.5 px-4 text-sm text-slate-400 hover:text-slate-200 transition">
+          未滿 18 歲，離開網頁
+        </button>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-500">
+        禁止酒駕 ｜ 未滿十八歲禁止飲酒 ｜ 本表單僅供預約諮詢
+      </div>
+    </div>
+  </div>
+
+  <!-- 頂部品牌 Banner -->
+  <header class="border-b border-amber-900/30 bg-gradient-to-b from-[#18131d] to-[#0f0e15] sticky top-0 z-30 shadow-md">
+    <div class="max-w-5xl mx-auto px-4 py-4 sm:px-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-amber-700 to-amber-950 flex items-center justify-center border border-amber-500/30 shadow-inner">
+          <i data-lucide="crown" class="w-6 h-6 text-amber-300"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-amber-100 font-serif-tc tracking-wide flex items-center gap-2">
+            永豐銀行 尊榮 VIP 品酒會
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-700/50 font-sans">SZITY 儷泉獨家</span>
+          </h1>
+          <p class="text-xs text-slate-400">奧地利與西班牙名莊典藏佳釀 貴賓專屬預約訂購意向單</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 法律提醒跑馬燈 -->
+  <div class="bg-red-950/80 border-b border-red-900/40 text-red-200 text-xs py-2 px-4 text-center font-medium">
+    ⚠️ 依《菸酒管理法》規範，酒類商品不得於線上直接刷卡交貨。填表後將由專人電話聯繫確認年齡與配送細節，滿 18 歲方可交貨。
+  </div>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-16">
+    
+    <!-- 前言導言卡片 -->
+    <section class="glass-panel rounded-2xl p-6 sm:p-8 mb-8 relative overflow-hidden">
+      <div class="absolute -right-12 -bottom-12 opacity-5 pointer-events-none">
+        <i data-lucide="grape" class="w-64 h-64 text-amber-300"></i>
+      </div>
+      <div class="max-w-2xl relative z-10">
+        <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold mb-2 inline-flex items-center gap-1.5">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Bank SinoPac VIP Special Selection
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-amber-100 font-serif-tc mb-3">
+          感謝您蒞臨永豐銀行尊榮 VIP 品酒會
+        </h2>
+        <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-4">
+          本次品酒會特別精選奧地利維也納經典香檳啤酒與西班牙經典名莊（巴斯克 Txakoli、里奧哈 Rioja、艾曼沙 Almansa）共 5 款廣受好評的代表性佳釀，提供獨家 VIP 專屬優惠價格。
+          單筆訂購 <strong>滿 6 瓶</strong> 或 <strong>滿 NT$ 3,000 元</strong> 即享本島低溫/常溫宅配免運費！
+        </p>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-2.5 py-1 rounded-md bg-amber-950/60 text-amber-300 border border-amber-800/40">VIP 專屬優惠配額</span>
+          <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-300">黑貓溫控低溫配送</span>
+          <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-300">滿 6 瓶或滿 $3,000 免運</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 訂購與驗證流程視覺化 -->
+    <!-- 酒品清單 (A、B、C、D、E) -->
+    <section class="space-y-6 mb-12">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-lg font-bold text-amber-200 font-serif-tc flex items-center gap-2">
+          <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i> 一、 精選酒款優惠訂購明細
+        </h3>
+        <span class="text-xs text-slate-400">已選合計：<strong id="headerTotalQty" class="text-amber-400 font-bold">0</strong> 瓶</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- 編號 A: 奧地利西格提酒莊 香檳啤酒 (第 1 頁) -->
+        <div class="wine-card glass-panel rounded-2xl p-5 flex flex-col justify-between relative md:col-span-2 lg:col-span-1" data-id="szigeti_beer" data-price="300" data-name="西格提酒莊 SZIGETI 香檳啤酒 750ml">
+          <div class="absolute top-4 left-4 bg-amber-500/20 text-amber-300 text-xs px-2 py-0.5 rounded font-mono font-bold border border-amber-400/40">
+            編號 A
+          </div>
+          <div class="absolute top-4 right-4 bg-amber-500/10 border border-amber-400/40 text-amber-300 text-xs px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+            <i data-lucide="sparkles" class="w-3 h-3"></i> 頂級香檳法二次發酵
+          </div>
+          <div class="mt-7">
+            <div class="text-xs font-semibold text-amber-500 uppercase tracking-wider mb-1">奧地利布根蘭區 (Burgenland, Gols)</div>
+            <h4 class="text-lg font-bold text-slate-100 font-serif-tc">西格提酒莊 SZIGETI 香檳啤酒 750ml</h4>
+            <p class="text-xs text-slate-400 italic mb-3">Sektkellerei Szigeti, Szigeti Beer (Alc. 6.0%)</p>
+
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              使用香檳酵母與傳統瓶內二次發酵，氣泡綿密厚重如香檳。帶淡雅蜂蜜清香，苦澀味極低且麥香濃郁純淨。
+            </p>
+
+            <div class="space-y-1.5 text-xs text-slate-400 mb-5 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+              <div class="flex justify-between"><span>釀造工藝：</span><span class="text-slate-200">香檳酵母、瓶內二次發酵</span></div>
+              <div class="flex justify-between"><span>風味標籤：</span><span class="text-slate-200">蜂蜜清香、綿密氣泡、麥香十足</span></div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-slate-500 line-through">原價 NT$ 600</div>
+              <div class="text-xl font-bold text-amber-400 font-brand">NT$ 300 <span class="text-xs font-normal text-slate-400">/瓶</span></div>
+            </div>
+            
+            <div class="flex items-center gap-2 bg-slate-900/80 border border-slate-700 rounded-xl p-1">
+              <button type="button" class="btn-qty-minus w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-slate-200 flex items-center justify-center transition" aria-label="減少數量">-</button>
+              <input type="number" min="0" max="99" value="0" class="wine-qty-input w-12 text-center bg-transparent text-amber-200 font-bold text-sm focus:outline-none" data-id="szigeti_beer">
+              <button type="button" class="btn-qty-plus w-8 h-8 rounded-lg bg-amber-900/60 hover:bg-amber-800 text-amber-200 active:bg-amber-700 flex items-center justify-center transition" aria-label="增加數量">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 編號 B: 查科莉白葡萄酒 (第 3 頁) -->
+        <div class="wine-card glass-panel rounded-2xl p-5 flex flex-col justify-between relative" data-id="txakoli" data-price="550" data-name="奏鳴酒莊 查科莉白葡萄酒2025">
+          <div class="absolute top-4 left-4 bg-amber-500/20 text-amber-300 text-xs px-2 py-0.5 rounded font-mono font-bold border border-amber-400/40">
+            編號 B
+          </div>
+          <div class="absolute top-4 right-4 bg-amber-500/10 border border-amber-400/40 text-amber-300 text-xs px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+            <i data-lucide="award" class="w-3 h-3"></i> 2024 WS 百大第 62 名
+          </div>
+          <div class="mt-7">
+            <div class="text-xs font-semibold text-amber-500 uppercase tracking-wider mb-1">西班牙巴斯克 (DO Getariako Txakolina)</div>
+            <h4 class="text-lg font-bold text-slate-100 font-serif-tc">奏鳴酒莊 查科莉白葡萄酒 2025</h4>
+            <p class="text-xs text-slate-400 italic mb-3">Txomin Etxaniz, Txakoli 2025</p>
+
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              黃翠綠稻草色、微氣泡與明亮細緻酸度，經典果香清爽迷人，完美佐搭海鮮、鹽漬鳳尾魚及巴斯克輕食。
+            </p>
+
+            <div class="space-y-1.5 text-xs text-slate-400 mb-5 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+              <div class="flex justify-between"><span>葡萄品種：</span><span class="text-slate-200">85% Hondarrabi Zuri, 15% Hondarrabi Beltza</span></div>
+              <div class="flex justify-between"><span>風味標籤：</span><span class="text-slate-200">清脆微氣泡、高酸爽脆、開胃白酒</span></div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-slate-500 line-through">原價 NT$ 850</div>
+              <div class="text-xl font-bold text-amber-400 font-brand">NT$ 550 <span class="text-xs font-normal text-slate-400">/瓶</span></div>
+            </div>
+            
+            <div class="flex items-center gap-2 bg-slate-900/80 border border-slate-700 rounded-xl p-1">
+              <button type="button" class="btn-qty-minus w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-slate-200 flex items-center justify-center transition" aria-label="減少數量">-</button>
+              <input type="number" min="0" max="99" value="0" class="wine-qty-input w-12 text-center bg-transparent text-amber-200 font-bold text-sm focus:outline-none" data-id="txakoli">
+              <button type="button" class="btn-qty-plus w-8 h-8 rounded-lg bg-amber-900/60 hover:bg-amber-800 text-amber-200 active:bg-amber-700 flex items-center justify-center transition" aria-label="增加數量">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 編號 C: 醉夢人紅葡萄酒 (第 4 頁) -->
+        <div class="wine-card glass-panel rounded-2xl p-5 flex flex-col justify-between relative" data-id="iselen" data-price="325" data-name="馬太莊園「醉夢人」紅葡萄酒">
+          <div class="absolute top-4 left-4 bg-amber-500/20 text-amber-300 text-xs px-2 py-0.5 rounded font-mono font-bold border border-amber-400/40">
+            編號 C
+          </div>
+          <div class="absolute top-4 right-4 bg-emerald-500/10 border border-emerald-400/40 text-emerald-300 text-xs px-2.5 py-0.5 rounded-full font-medium">
+            超高 CP 輕鬆獨飲
+          </div>
+          <div class="mt-7">
+            <div class="text-xs font-semibold text-rose-400 uppercase tracking-wider mb-1">西班牙里奧哈 (DOCa Rioja)</div>
+            <h4 class="text-lg font-bold text-slate-100 font-serif-tc">馬太莊園「醉夢人」紅葡萄酒</h4>
+            <p class="text-xs text-slate-400 italic mb-3">Bodegas Mateos, Iselen Tinto</p>
+
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              暗紅酒色、紅色莓果與草本薄荷清香，口感甜美溫和，中等酒體兼具緊實肉香，搭生火腿沙拉與日常肉類首選。
+            </p>
+
+            <div class="space-y-1.5 text-xs text-slate-400 mb-5 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+              <div class="flex justify-between"><span>葡萄品種：</span><span class="text-slate-200">80% Tempranillo, 20% Garnacha</span></div>
+              <div class="flex justify-between"><span>風味標籤：</span><span class="text-slate-200">覆盆子、雪松蒔蘿、圓潤平衡</span></div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-slate-500 line-through">原價 NT$ 500</div>
+              <div class="text-xl font-bold text-amber-400 font-brand">NT$ 325 <span class="text-xs font-normal text-slate-400">/瓶</span></div>
+            </div>
+
+            <div class="flex items-center gap-2 bg-slate-900/80 border border-slate-700 rounded-xl p-1">
+              <button type="button" class="btn-qty-minus w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition">-</button>
+              <input type="number" min="0" max="99" value="0" class="wine-qty-input w-12 text-center bg-transparent text-amber-200 font-bold text-sm focus:outline-none" data-id="iselen">
+              <button type="button" class="btn-qty-plus w-8 h-8 rounded-lg bg-amber-900/60 hover:bg-amber-800 text-amber-200 flex items-center justify-center transition">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 編號 D: 知更鳥花園晚摘微甜白酒 (第 6 頁) -->
+        <div class="wine-card glass-panel rounded-2xl p-5 flex flex-col justify-between relative" data-id="marius_blanco" data-price="390" data-name="彼凱樂酒莊 知更鳥花園晚摘微甜白葡萄酒2024">
+          <div class="absolute top-4 left-4 bg-amber-500/20 text-amber-300 text-xs px-2 py-0.5 rounded font-mono font-bold border border-amber-400/40">
+            編號 D
+          </div>
+          <div class="absolute top-4 right-4 bg-sky-500/10 border border-sky-400/40 text-sky-300 text-xs px-2.5 py-0.5 rounded-full font-medium">
+            台灣土鳳梨果香 / 微甜
+          </div>
+          <div class="mt-7">
+            <div class="text-xs font-semibold text-amber-500 uppercase tracking-wider mb-1">西班牙艾曼沙 (DO Almansa)</div>
+            <h4 class="text-lg font-bold text-slate-100 font-serif-tc">彼凱樂酒莊 知更鳥花園晚摘微甜白酒 2024</h4>
+            <p class="text-xs text-slate-400 italic mb-3">Bodegas Piqueras, Marius Unico Blanco 2024</p>
+
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              清新微甜弱酸、白桃與台灣土鳳梨果香，夾帶杏仁堅果尾韻，適飲度極高，適合單獨品味或搭配輕食甜點。
+            </p>
+
+            <div class="space-y-1.5 text-xs text-slate-400 mb-5 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+              <div class="flex justify-between"><span>葡萄品種：</span><span class="text-slate-200">55% Sauvignon Blanc, 45% Verdejo</span></div>
+              <div class="flex justify-between"><span>風味標籤：</span><span class="text-slate-200">淡雅花香、白桃鳳梨、核果餘韻</span></div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-slate-500 line-through">原價 NT$ 600</div>
+              <div class="text-xl font-bold text-amber-400 font-brand">NT$ 390 <span class="text-xs font-normal text-slate-400">/瓶</span></div>
+            </div>
+
+            <div class="flex items-center gap-2 bg-slate-900/80 border border-slate-700 rounded-xl p-1">
+              <button type="button" class="btn-qty-minus w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition">-</button>
+              <input type="number" min="0" max="99" value="0" class="wine-qty-input w-12 text-center bg-transparent text-amber-200 font-bold text-sm focus:outline-none" data-id="marius_blanco">
+              <button type="button" class="btn-qty-plus w-8 h-8 rounded-lg bg-amber-900/60 hover:bg-amber-800 text-amber-200 flex items-center justify-center transition">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 編號 E: 魔力紅陳釀級精選紅酒 (第 6 頁) -->
+        <div class="wine-card glass-panel rounded-2xl p-5 flex flex-col justify-between relative" data-id="gran_marius" data-price="390" data-name="彼凱樂酒莊 魔力紅陳釀級精選紅葡萄酒2020">
+          <div class="absolute top-4 left-4 bg-amber-500/20 text-amber-300 text-xs px-2 py-0.5 rounded font-mono font-bold border border-amber-400/40">
+            編號 E
+          </div>
+          <div class="absolute top-4 right-4 bg-purple-500/10 border border-purple-400/40 text-purple-300 text-xs px-2.5 py-0.5 rounded-full font-medium">
+            桶陳 12 個月 + 瓶陳 18 個月
+          </div>
+          <div class="mt-7">
+            <div class="text-xs font-semibold text-rose-400 uppercase tracking-wider mb-1">西班牙艾曼沙 (DO Almansa)</div>
+            <h4 class="text-lg font-bold text-slate-100 font-serif-tc">彼凱樂酒莊 魔力紅陳釀級精選紅酒 2020</h4>
+            <p class="text-xs text-slate-400 italic mb-3">Bodegas Piqueras, Gran Marius Reserva Seleccion 2020</p>
+
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              橡木桶陳釀 12 個月 + 瓶陳 18 個月；深紅寶石色，李子、紅椒與煙燻風味，單寧紮實柔順、餘味幽長。
+            </p>
+
+            <div class="space-y-1.5 text-xs text-slate-400 mb-5 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+              <div class="flex justify-between"><span>葡萄品種：</span><span class="text-slate-200">Tempranillo, Monastrell, Garnacha T., Syrah</span></div>
+              <div class="flex justify-between"><span>風味標籤：</span><span class="text-slate-200">深色李子、煙燻木質、紮實單寧</span></div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-slate-500 line-through">原價 NT$ 600</div>
+              <div class="text-xl font-bold text-amber-400 font-brand">NT$ 390 <span class="text-xs font-normal text-slate-400">/瓶</span></div>
+            </div>
+
+            <div class="flex items-center gap-2 bg-slate-900/80 border border-slate-700 rounded-xl p-1">
+              <button type="button" class="btn-qty-minus w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition">-</button>
+              <input type="number" min="0" max="99" value="0" class="wine-qty-input w-12 text-center bg-transparent text-amber-200 font-bold text-sm focus:outline-none" data-id="gran_marius">
+              <button type="button" class="btn-qty-plus w-8 h-8 rounded-lg bg-amber-900/60 hover:bg-amber-800 text-amber-200 flex items-center justify-center transition">+</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- 左側 2 欄：訂購人與配送資訊填寫 -->
+      <section class="lg:col-span-2 glass-panel rounded-2xl p-6 sm:p-8">
+        <h3 class="text-lg font-bold text-amber-200 font-serif-tc mb-6 flex items-center gap-2">
+          <i data-lucide="user-check" class="w-5 h-5 text-amber-400"></i> 二、 訂購人與配送資訊
+        </h3>
+
+        <form id="orderForm" class="space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="customerName" class="block text-xs font-medium text-slate-300 mb-1.5">
+                訂購人姓名 <span class="text-red-400">*</span>
+              </label>
+              <input type="text" id="customerName" required placeholder="例如：王大明"
+                     class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+            </div>
+
+            <div>
+              <label for="customerPhone" class="block text-xs font-medium text-slate-300 mb-1.5">
+                聯絡行動電話 <span class="text-red-400">*</span>
+              </label>
+              <input type="tel" id="customerPhone" required placeholder="0912-345-678"
+                     class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="birthDate" class="block text-xs font-medium text-slate-300 mb-1.5">
+                出生年月日 (法定查核使用) <span class="text-red-400">*</span>
+              </label>
+              <input type="date" id="birthDate" required
+                     class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+            </div>
+
+            <div>
+              <label for="contactEmail" class="block text-xs font-medium text-slate-300 mb-1.5">
+                聯絡 E-mail (訂單明細備份)
+              </label>
+              <input type="email" id="contactEmail" placeholder="example@email.com"
+                     class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="receiverName" class="block text-xs font-medium text-slate-300 mb-1.5">
+                收件人姓名 (如與訂購人相同可免填)
+              </label>
+              <input type="text" id="receiverName" placeholder="同訂購人"
+                     class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+            </div>
+
+            <div>
+              <label for="deliveryMethod" class="block text-xs font-medium text-slate-300 mb-1.5">
+                配送方式 <span class="text-red-400">*</span>
+              </label>
+              <div class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-amber-300 flex items-center justify-between">
+                <span>黑貓低溫/常溫宅配到府</span>
+                <span class="text-xs text-slate-400">滿6瓶或滿$3,000免運</span>
+              </div>
+              <input type="hidden" id="deliveryMethod" value="delivery">
+            </div>
+          </div>
+
+          <div id="addressFieldContainer">
+            <label for="deliveryAddress" class="block text-xs font-medium text-slate-300 mb-1.5">
+              收件地址 <span class="text-red-400">*</span>
+            </label>
+            <input type="text" id="deliveryAddress" required placeholder="請填寫完整縣市、鄉鎮市區及路段門牌號碼"
+                   class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="deliveryTimeSlot" class="block text-xs font-medium text-slate-300 mb-1.5">
+                希望配送時段
+              </label>
+              <select id="deliveryTimeSlot" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400 transition">
+                <option value="anytime">不指定</option>
+                <option value="before_13">13:00 前</option>
+                <option value="14_to_18">14:00 – 18:00</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="paymentPreference" class="block text-xs font-medium text-slate-300 mb-1.5">
+                三、 付款方式 <span class="text-red-400">*</span>
+              </label>
+              <select id="paymentPreference" class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-amber-400 transition">
+                <option value="bank_transfer">銀行虛擬帳號轉帳 / 匯款（客服確認訂單後提供專屬繳款帳號）</option>
+                <option value="cod">貨到收現（需配合物流端手續費）</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="orderNotes" class="block text-xs font-medium text-slate-300 mb-1.5">
+              備註說明（如發票需求 / 統編抬頭 / 送禮包裝）
+            </label>
+            <textarea id="orderNotes" rows="2" placeholder="如有公司統編抬頭、卡片贈言或特殊配送需求請備註於此..."
+                      class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition"></textarea>
+          </div>
+
+          <!-- 法定合規承諾核取方塊 -->
+          <div class="p-4 rounded-xl bg-slate-950/70 border border-amber-900/40 space-y-3">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" id="legalCheckbox" required class="mt-1 h-4 w-4 rounded border-slate-700 text-amber-600 focus:ring-amber-500">
+              <span class="text-xs text-slate-300 leading-relaxed">
+                <strong class="text-amber-300 font-semibold">【法定承諾聲明】</strong> 我已年滿 18 歲，並瞭解送貨人員於交貨時依法得查驗身分證件。本表單僅為「網路預約詢價意願單」，送出後由儷泉酒窖專人透過電話/LINE核對法定年齡與購買意向後方正式成立訂單。
+              </span>
+            </label>
+          </div>
+
+          <div class="pt-2 flex flex-col sm:flex-row gap-3">
+            <button type="submit" id="btnSubmitOrder" class="flex-1 py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-400 text-black font-bold text-sm tracking-wide shadow-lg shadow-amber-900/30 transition transform active:scale-[0.99] flex items-center justify-center gap-2">
+              <i data-lucide="send" class="w-4 h-4"></i> 確認送出 VIP 預約單
+            </button>
+            <button type="button" id="btnCopySummary" class="py-3.5 px-5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-sm font-medium transition flex items-center justify-center gap-2">
+              <i data-lucide="copy" class="w-4 h-4 text-amber-400"></i> 複製訂單文字 (LINE 諮詢)
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 右側 1 欄：即時金額試算與門市資訊 -->
+      <aside class="space-y-6">
+        
+        <!-- 即時試算卡片 -->
+        <div class="glass-panel rounded-2xl p-6 border border-amber-500/20 sticky top-24">
+          <h4 class="text-sm font-bold text-amber-200 uppercase tracking-wider mb-4 flex items-center justify-between border-b border-slate-800 pb-2">
+            <span>訂單總計試算</span>
+            <span class="text-xs text-amber-400 font-normal">VIP 專屬優惠</span>
+          </h4>
+
+          <div class="space-y-3 text-sm text-slate-300 mb-6" id="summaryItemList">
+            <div class="text-xs text-slate-500 py-3 text-center italic">尚未挑選酒品</div>
+          </div>
+
+          <div class="space-y-2 text-xs border-t border-slate-800 pt-3">
+            <div class="flex justify-between text-slate-300">
+              <span>訂購總瓶數：</span>
+              <span id="summaryTotalBottles" class="font-bold text-slate-100">共 0 瓶</span>
+            </div>
+            <div class="flex justify-between text-slate-400">
+              <span>商品小計 (原價)：</span>
+              <span id="subtotalOriginalPrice" class="line-through">NT$ 0</span>
+            </div>
+            <div class="flex justify-between text-emerald-400">
+              <span>專屬優惠節省：</span>
+              <span id="discountSavings">- NT$ 0</span>
+            </div>
+            <div class="flex justify-between text-slate-300">
+              <span>商品總金額 (折後)：</span>
+              <span id="subtotalDiscountPrice" class="font-bold text-slate-100">NT$ 0</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-300">
+              <span class="flex items-center gap-1">
+                本島低溫宅配運費：
+                <i data-lucide="truck" class="w-3.5 h-3.5 text-slate-400"></i>
+              </span>
+              <span id="shippingFeeText">NT$ 0</span>
+            </div>
+            <div id="freeShippingNotice" class="text-[11px] text-amber-400/90 pt-1">
+              💡 滿 6 瓶 或 滿 NT$ 3,000 即享免運 (目前 0 瓶 / 差 NT$ 3,000)
+            </div>
+          </div>
+
+          <div class="border-t border-amber-500/30 mt-4 pt-4 flex justify-between items-baseline">
+            <span class="text-sm font-bold text-amber-100 font-serif-tc">本單應付總金額：</span>
+            <div class="text-right">
+              <span id="grandTotalPrice" class="text-2xl font-black text-amber-400 font-brand">NT$ 0</span>
+              <div class="text-[10px] text-slate-500">含稅與冷鏈包裝</div>
+            </div>
+          </div>
+
+          <!-- 快速清空按鈕 -->
+          <div class="mt-4 pt-3 text-right">
+            <button id="btnResetCart" type="button" class="text-xs text-slate-500 hover:text-red-400 underline transition">
+              清空重選
+            </button>
+          </div>
+        </div>
+
+        <!-- 四、 訂購資訊 -->
+        <div class="glass-panel rounded-2xl p-5 border border-slate-800 text-xs text-slate-300 space-y-3">
+          <div class="font-semibold text-amber-300 flex items-center gap-1.5 text-sm">
+            <i data-lucide="phone-call" class="w-4 h-4 text-emerald-400"></i> 四、 訂購資訊
+          </div>
+          <div class="space-y-2 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
+            <div class="font-medium text-slate-200">
+              永豐VIP會員訂購專案聯繫：<strong class="text-amber-300">周佩儀 小姐</strong>
+            </div>
+            <div class="flex items-center gap-2 text-slate-200">
+              <span>連絡電話：</span>
+              <a href="tel:0928621898" class="text-amber-400 hover:text-amber-300 font-mono font-bold text-sm underline tracking-wider">
+                0928-621-898
+              </a>
+            </div>
+          </div>
+          <div class="text-[11px] text-slate-400 space-y-1">
+            <div class="text-slate-500">（如需專人客製化詢價或企業贈禮請直接致電專案負責人）</div>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+    <!-- 提交完成提示彈窗 -->
+    <div id="confirmationModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+      <div class="glass-panel max-w-lg w-full rounded-2xl p-6 sm:p-8 shadow-2xl border border-amber-400/40 text-center animate-fade-in">
+        <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-emerald-950/80 border border-emerald-500/50 flex items-center justify-center text-emerald-400">
+          <i data-lucide="check" class="w-8 h-8"></i>
+        </div>
+        <h3 class="text-xl font-bold text-amber-100 font-serif-tc mb-2">預約訂購意願已成功送出！</h3>
+        <p class="text-xs sm:text-sm text-slate-300 mb-5 leading-relaxed text-left bg-slate-900/60 p-4 rounded-xl border border-slate-800" id="modalConfirmationContent">
+          <!-- 動態插入內容 -->
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button id="btnModalCopy" class="flex-1 py-2.5 px-4 bg-amber-600 hover:bg-amber-500 text-black font-semibold rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+            <i data-lucide="copy" class="w-4 h-4"></i> 複製訂單內容至 LINE
+          </button>
+          <button id="btnModalClose" class="py-2.5 px-5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition">
+            關閉視窗
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 複製成功 Toast 浮動提醒 -->
+    <div id="toastMessage" class="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 hidden bg-slate-800/95 border border-amber-400/50 text-amber-200 text-xs py-2.5 px-5 rounded-full shadow-2xl items-center gap-2">
+      <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+      <span id="toastText">已成功複製到剪貼簿！</span>
+    </div>
+
+  </main>
+
+  <!-- 底部固定警語 Banner -->
+  <footer class="fixed bottom-0 inset-x-0 bg-black/95 border-t border-red-900/50 py-2.5 z-40 text-center">
+    <div class="max-w-5xl mx-auto px-4 flex items-center justify-center gap-3 text-red-500 font-bold text-xs sm:text-sm tracking-widest font-serif-tc">
+      <span>🚫 禁止酒駕</span>
+      <span class="text-slate-600">｜</span>
+      <span>🔞 未滿十八歲禁止飲酒</span>
+      <span class="text-slate-600">｜</span>
+      <span>🍷 飲酒過量有害健康</span>
+    </div>
+  </footer>
+
+  <script>
+    // 酒款數據庫 (A, B, C, D, E)
+    const WINE_PRODUCTS = {
+      szigeti_beer: {
+        id: "szigeti_beer",
+        code: "A",
+        name: "西格提酒莊 SZIGETI 香檳啤酒 750ml",
+        originalPrice: 600,
+        specialPrice: 300,
+        unit: "瓶"
+      },
+      txakoli: {
+        id: "txakoli",
+        code: "B",
+        name: "奏鳴酒莊 查科莉白葡萄酒 2025",
+        originalPrice: 850,
+        specialPrice: 550,
+        unit: "瓶"
+      },
+      iselen: {
+        id: "iselen",
+        code: "C",
+        name: "馬太莊園「醉夢人」紅葡萄酒",
+        originalPrice: 500,
+        specialPrice: 325,
+        unit: "瓶"
+      },
+      marius_blanco: {
+        id: "marius_blanco",
+        code: "D",
+        name: "彼凱樂酒莊 知更鳥花園晚摘微甜白葡萄酒 2024",
+        originalPrice: 600,
+        specialPrice: 390,
+        unit: "瓶"
+      },
+      gran_marius: {
+        id: "gran_marius",
+        code: "E",
+        name: "彼凱樂酒莊 魔力紅陳釀級精選紅葡萄酒 2020",
+        originalPrice: 600,
+        specialPrice: 390,
+        unit: "瓶"
+      }
+    };
+
+    // 狀態管理：滿 6 瓶 或 滿 NT$ 3,000 免運，否則 NT$ 180
+    const state = {
+      quantities: {
+        szigeti_beer: 0,
+        txakoli: 0,
+        iselen: 0,
+        marius_blanco: 0,
+        gran_marius: 0
+      },
+      shippingMethod: "delivery",
+      freeShippingThresholdPrice: 3000,
+      freeShippingThresholdBottles: 6,
+      standardShippingFee: 180
+    };
+
+    // DOM 節點初始化
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+
+      // 年齡門檻驗證
+      const ageModal = document.getElementById("ageVerificationModal");
+      const btnAgeConfirm = document.getElementById("btnAgeConfirm");
+      const btnAgeReject = document.getElementById("btnAgeReject");
+
+      if (sessionStorage.getItem("szity_age_verified") === "true") {
+        ageModal.classList.add("hidden");
+      }
+
+      btnAgeConfirm.addEventListener("click", () => {
+        sessionStorage.setItem("szity_age_verified", "true");
+        ageModal.classList.add("opacity-0");
+        setTimeout(() => ageModal.classList.add("hidden"), 300);
+      });
+
+      btnAgeReject.addEventListener("click", () => {
+        window.location.href = "https://www.google.com";
+      });
+
+      // 數量增減按鈕事件
+      document.querySelectorAll(".wine-card").forEach(card => {
+        const id = card.getAttribute("data-id");
+        const minusBtn = card.querySelector(".btn-qty-minus");
+        const plusBtn = card.querySelector(".btn-qty-plus");
+        const input = card.querySelector(".wine-qty-input");
+
+        minusBtn.addEventListener("click", () => {
+          let val = parseInt(input.value) || 0;
+          if (val > 0) {
+            val--;
+            input.value = val;
+            updateCartQuantity(id, val);
+          }
+        });
+
+        plusBtn.addEventListener("click", () => {
+          let val = parseInt(input.value) || 0;
+          if (val < 99) {
+            val++;
+            input.value = val;
+            updateCartQuantity(id, val);
+          }
+        });
+
+        input.addEventListener("change", () => {
+          let val = parseInt(input.value);
+          if (isNaN(val) || val < 0) val = 0;
+          if (val > 99) val = 99;
+          input.value = val;
+          updateCartQuantity(id, val);
+        });
+      });
+
+      // 清空重選
+      document.getElementById("btnResetCart").addEventListener("click", () => {
+        Object.keys(state.quantities).forEach(key => {
+          state.quantities[key] = 0;
+        });
+        document.querySelectorAll(".wine-qty-input").forEach(inp => inp.value = 0);
+        calculateTotals();
+        showToast("已清空所有已選品項");
+      });
+
+      // 表單送出事件
+      const orderForm = document.getElementById("orderForm");
+      orderForm.addEventListener("submit", handleOrderSubmit);
+
+      // 複製訂單文字按鈕 (主畫面)
+      document.getElementById("btnCopySummary").addEventListener("click", () => {
+        const summaryText = generateOrderSummaryText();
+        copyToClipboard(summaryText);
+        showToast("訂單明細已複製，可直接貼至 LINE 諮詢專人！");
+      });
+
+      // 彈窗內複製與關閉
+      document.getElementById("btnModalCopy").addEventListener("click", () => {
+        const summaryText = generateOrderSummaryText();
+        copyToClipboard(summaryText);
+        showToast("訂單明細已複製！");
+      });
+
+      document.getElementById("btnModalClose").addEventListener("click", () => {
+        document.getElementById("confirmationModal").classList.add("hidden");
+      });
+
+      calculateTotals();
+    });
+
+    function updateCartQuantity(wineId, qty) {
+      state.quantities[wineId] = qty;
+      calculateTotals();
+    }
+
+    function calculateTotals() {
+      let totalQty = 0;
+      let totalOriginal = 0;
+      let totalDiscounted = 0;
+
+      const summaryListEl = document.getElementById("summaryItemList");
+      summaryListEl.innerHTML = "";
+
+      let hasItems = false;
+
+      Object.keys(state.quantities).forEach(id => {
+        const qty = state.quantities[id];
+        if (qty > 0) {
+          hasItems = true;
+          totalQty += qty;
+          const prod = WINE_PRODUCTS[id];
+          const itemOriginalSub = prod.originalPrice * qty;
+          const itemDiscountSub = prod.specialPrice * qty;
+
+          totalOriginal += itemOriginalSub;
+          totalDiscounted += itemDiscountSub;
+
+          const row = document.createElement("div");
+          row.className = "flex justify-between items-start text-xs border-b border-slate-800/60 pb-2";
+          row.innerHTML = `
+            <div class="pr-2">
+              <div class="text-slate-200 font-medium">【${prod.code}】${prod.name}</div>
+              <div class="text-slate-500">NT$ ${prod.specialPrice} × ${qty} 瓶</div>
+            </div>
+            <div class="text-amber-300 font-bold font-brand text-right">
+              NT$ ${itemDiscountSub.toLocaleString()}
+            </div>
+          `;
+          summaryListEl.appendChild(row);
+        }
+      });
+
+      if (!hasItems) {
+        summaryListEl.innerHTML = '<div class="text-xs text-slate-500 py-3 text-center italic">尚未挑選酒品</div>';
+      }
+
+      // 更新頂部與清單總瓶數
+      document.getElementById("headerTotalQty").innerText = totalQty;
+      document.getElementById("summaryTotalBottles").innerText = `共 ${totalQty} 瓶`;
+
+      // 運費規則：滿 6 瓶 或 滿 NT$ 3,000 元 免運；未滿則 NT$ 180
+      let shippingFee = 0;
+      const freeNotice = document.getElementById("freeShippingNotice");
+
+      const isFreeByBottle = totalQty >= state.freeShippingThresholdBottles;
+      const isFreeByPrice = totalDiscounted >= state.freeShippingThresholdPrice;
+
+      if (isFreeByBottle || isFreeByPrice) {
+        shippingFee = 0;
+        document.getElementById("shippingFeeText").innerHTML = '<span class="text-emerald-400 font-medium">已達免運門檻</span>';
+        if (isFreeByBottle && isFreeByPrice) {
+          freeNotice.innerHTML = "✨ 已達標（滿 6 瓶且滿 $3,000），享低溫免運！";
+        } else if (isFreeByBottle) {
+          freeNotice.innerHTML = `✨ 已達標（已達 ${totalQty} 瓶 ≥ 6 瓶），享低溫免運！`;
+        } else {
+          freeNotice.innerHTML = `✨ 已達標（金額達 NT$ ${totalDiscounted.toLocaleString()} ≥ $3,000），享低溫免運！`;
+        }
+      } else if (totalQty > 0) {
+        shippingFee = state.standardShippingFee;
+        const diffBottles = state.freeShippingThresholdBottles - totalQty;
+        const diffPrice = state.freeShippingThresholdPrice - totalDiscounted;
+        document.getElementById("shippingFeeText").innerText = `NT$ ${shippingFee}`;
+        freeNotice.innerHTML = `💡 還差 <strong class="text-amber-300">${diffBottles} 瓶</strong> 或 <strong class="text-amber-300">NT$ ${diffPrice.toLocaleString()}</strong> 享免運`;
+      } else {
+        shippingFee = 0;
+        document.getElementById("shippingFeeText").innerText = `NT$ 0`;
+        freeNotice.innerHTML = "💡 滿 6 瓶 或 滿 NT$ 3,000 即享黑貓低溫宅配免運";
+      }
+
+      const savings = totalOriginal - totalDiscounted;
+      const grandTotal = totalDiscounted + shippingFee;
+
+      document.getElementById("subtotalOriginalPrice").innerText = `NT$ ${totalOriginal.toLocaleString()}`;
+      document.getElementById("discountSavings").innerText = `- NT$ ${savings.toLocaleString()}`;
+      document.getElementById("subtotalDiscountPrice").innerText = `NT$ ${totalDiscounted.toLocaleString()}`;
+      document.getElementById("grandTotalPrice").innerText = `NT$ ${grandTotal.toLocaleString()}`;
+    }
+
+    function generateOrderSummaryText() {
+      const name = document.getElementById("customerName").value.trim() || "(尚未填寫姓名)";
+      const phone = document.getElementById("customerPhone").value.trim() || "(尚未填寫電話)";
+      const birth = document.getElementById("birthDate").value || "(未填)";
+      const email = document.getElementById("contactEmail").value.trim() || "無";
+      const receiverName = document.getElementById("receiverName").value.trim() || "同訂購人";
+      const deliveryType = "本島黑貓低溫/常溫宅配到府";
+      const address = document.getElementById("deliveryAddress").value.trim() || "未填";
+      const timeSlot = document.getElementById("deliveryTimeSlot").selectedOptions[0].text;
+      const paymentPref = document.getElementById("paymentPreference").selectedOptions[0].text;
+      const notes = document.getElementById("orderNotes").value.trim() || "無";
+
+      let wineLines = [];
+      let totalQty = 0;
+      let totalDiscounted = 0;
+
+      Object.keys(state.quantities).forEach(id => {
+        const qty = state.quantities[id];
+        if (qty > 0) {
+          const prod = WINE_PRODUCTS[id];
+          const sub = prod.specialPrice * qty;
+          totalQty += qty;
+          totalDiscounted += sub;
+          wineLines.push(`【${prod.code}】${prod.name} × ${qty} 瓶 (小計 NT$ ${sub.toLocaleString()})`);
+        }
+      });
+
+      let shippingFee = 0;
+      if (totalQty > 0) {
+        if (totalQty < state.freeShippingThresholdBottles && totalDiscounted < state.freeShippingThresholdPrice) {
+          shippingFee = state.standardShippingFee;
+        }
+      }
+      const grandTotal = totalDiscounted + shippingFee;
+
+      return `永豐銀行尊榮VIP品酒會【SZITY 儷泉精選】西班牙與奧地利名莊佳釀 專屬訂購單
+----------------------------------------
+【永豐VIP會員專案窗口】
+專案聯繫：周佩儀 小姐
+連絡電話：0928-621-898
+----------------------------------------
+【訂購人與配送資訊】
+👤 訂購人姓名：${name}
+📞 聯絡行動電話：${phone}
+🎂 出生年月日：${birth}（已確認年滿 18 歲）
+📧 聯絡 E-mail：${email}
+📦 收件人姓名：${receiverName}
+🚚 配送方式：${deliveryType}
+📍 收件地址：${address}
+⏰ 希望配送時段：${timeSlot}
+💳 付款方式：${paymentPref}
+📝 備註說明：${notes}
+----------------------------------------
+【精選酒款優惠訂購明細】
+${wineLines.length > 0 ? wineLines.join("\n") : "（尚未選取任何酒款）"}
+
+訂購總瓶數：共 ${totalQty} 瓶
+商品總金額：NT$ ${totalDiscounted.toLocaleString()} 元
+本島宅配運費：NT$ ${shippingFee} 元 ${shippingFee === 0 && totalQty > 0 ? '(符合免運條件)' : ''}
+本單應付總金額：NT$ ${grandTotal.toLocaleString()} 元
+----------------------------------------
+⚠ 法令宣導提醒：
+依據台灣《菸酒管理法》規定，酒類商品不得於網路上直接進行電子商務刷卡結帳。
+本表單視同送出預約訂購意願，專人將於 24 小時內電話聯繫核對年齡與付款配送細節。
+【禁止酒駕 ｜ 未滿十八歲禁止飲酒】`;
+    }
+
+    // 表單提交處理
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+
+      let totalQty = 0;
+      Object.values(state.quantities).forEach(q => totalQty += q);
+
+      if (totalQty === 0) {
+        showToast("請至少挑選 1 瓶酒款再送出表單！");
+        return;
+      }
+
+      // 年齡出生年換算二次檢查
+      const birthVal = document.getElementById("birthDate").value;
+      if (birthVal) {
+        const birthDate = new Date(birthVal);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        if (age < 18) {
+          showToast("抱歉，依《菸酒管理法》未滿 18 歲無法進行酒類預約！");
+          return;
+        }
+      }
+
+      const name = document.getElementById("customerName").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
+      const grandTotal = document.getElementById("grandTotalPrice").innerText;
+
+      const modalContent = document.getElementById("modalConfirmationContent");
+      modalContent.innerHTML = `
+        <strong class="text-amber-300 font-semibold">${name}</strong> 貴賓您好，已收到您於永豐銀行 VIP 品酒會的專屬預約訂單！<br><br>
+        • 訂購總瓶數：<strong class="text-slate-100">共 ${totalQty} 瓶</strong><br>
+        • 應付總金額：<strong class="text-amber-400 font-bold">${grandTotal}</strong><br>
+        • 聯絡行動電話：<span class="text-slate-200">${phone}</span><br><br>
+        <div class="p-2.5 rounded-lg bg-amber-950/40 border border-amber-800/40 text-xs text-amber-200 mb-2">
+          專案負責窗口：<strong>周佩儀 小姐 (0928-621-898)</strong> 將於 24 小時內與您聯繫核對年齡與款項。
+        </div>
+        <span class="text-slate-400 text-xs">
+          您亦可直接點擊下方按鈕，複製明細傳送至官方 LINE 客服專員。
+        </span>
+      `;
+
+      document.getElementById("confirmationModal").classList.remove("hidden");
+    }
+
+    // 複製至剪貼簿
+    function copyToClipboard(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        console.error("無法複製文字", err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    // Toast 提示訊息
+    function showToast(msg) {
+      const toast = document.getElementById("toastMessage");
+      const toastText = document.getElementById("toastText");
+      toastText.innerText = msg;
+      toast.classList.remove("hidden");
+      toast.classList.add("flex");
+
+      setTimeout(() => {
+        toast.classList.add("hidden");
+        toast.classList.remove("flex");
+      }, 3200);
+    }
+  </script>
+</body>
+</html>
